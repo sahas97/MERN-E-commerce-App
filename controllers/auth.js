@@ -2,14 +2,15 @@ const bcrypt = require("bcryptjs");
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const validationResult = require('express-validator').validationResult;
+require('dotenv').config();
 
 const User = require("../models/user");
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'sahasbro97@gmail.com',
-    pass: 'vxvc ayel lylq elmq'
+    user: process.env.EMAIL,
+    pass: process.env.EMAIL_PASS
   }
 });
 
@@ -126,7 +127,7 @@ exports.postSignup = (req, res, next) => {
       res.redirect('/login');
       return transporter.sendMail({
         to: email,
-        from: 'sahasbro97@gmail.com',
+        from: 'mernshop.com',
         subject: 'Signup succeeded!',
         html: '<h1> You successfully signed up!</h1>'
       }).catch(err => {
